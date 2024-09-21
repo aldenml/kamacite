@@ -61,14 +61,12 @@ public class Util {
      * @return -1 if a < b, 0 if a == b, 1 if a > b
      */
     public static int compare(byte[] a, byte[] b, int len) {
-        int i;
         int gt = 0;
         int eq = 1;
-        int x1, x2;
+        int x1 = 0;
+        int x2 = 0;
 
-        i = len;
-        while (i != 0) {
-            i--;
+        for (int i = len - 1; i >= 0; i--) {
             x1 = a[i] & 0xFF;
             x2 = b[i] & 0xFF;
 
