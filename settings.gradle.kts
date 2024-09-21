@@ -4,3 +4,4 @@ plugins {
 rootProject.name = "kamacite"
 
 include("reference")
+include("tools")

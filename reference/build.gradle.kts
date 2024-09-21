@@ -2,6 +2,9 @@ plugins {
     `java-library`
 }
 
+group = "org.kamacite"
+version = "0.0.1"
+
 repositories {
     mavenCentral()
 }
