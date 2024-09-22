@@ -10,7 +10,7 @@ package org.kamacite.tools.parser
 import com.github.javaparser.ast.body.MethodDeclaration
 
 class JavaMethod(
-    private val methodDeclaration: MethodDeclaration,
+    val methodDeclaration: MethodDeclaration,
 ) {
 
     fun name(): String {

@@ -8,6 +8,7 @@
 package org.kamacite.tools.parser
 
 import com.github.javaparser.JavaParser
+import org.kamacite.tools.FileParseException
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -29,13 +30,11 @@ class ReferenceParser {
             val javaParser = JavaParser()
             val parseResult = javaParser.parse(file)
 
-            if (parseResult.isSuccessful && parseResult.result.isPresent) {
+            if (parseResult.isSuccessful) {
                 val compilationUnit = parseResult.result.get()
                 result.add(JavaFile(compilationUnit))
-            } else {
-                val error = parseResult.problems.joinToString { it.message }
-                throw IllegalArgumentException(error)
-            }
+            } else
+                throw FileParseException(file, parseResult.problems)
         }
 
         return result
@@ -44,8 +43,10 @@ class ReferenceParser {
     private fun srcPath(): Path {
         val workingPath = Paths.get("").toAbsolutePath().toString()
 
-        val rootPath = if (workingPath.endsWith("tools"))
-            workingPath.removeSuffix("tools")
+        val toolsSuffix = "tools"
+
+        val rootPath = if (workingPath.endsWith(toolsSuffix))
+            workingPath.removeSuffix(toolsSuffix)
         else
             workingPath
 

@@ -12,7 +12,7 @@ import com.github.javaparser.ast.body.MethodDeclaration
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter
 
 class JavaFile(
-    private val compilationUnit: CompilationUnit,
+    val compilationUnit: CompilationUnit,
 ) {
 
     fun name(): String {

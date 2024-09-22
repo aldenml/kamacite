@@ -13,7 +13,7 @@ import kotlin.test.assertEquals
 class ReferenceParserTest {
 
     @Test
-    fun testParseFiles() {
+    fun testParseFilesCount() {
 
         val parser = ReferenceParser()
         val files = parser.parse()
