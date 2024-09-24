@@ -7,7 +7,9 @@
 
 package org.kamacite.tools.translators.jvm
 
+import com.github.javaparser.ast.expr.ArrayAccessExpr
 import com.github.javaparser.ast.expr.ArrayCreationExpr
+import com.github.javaparser.ast.expr.BinaryExpr
 import com.github.javaparser.ast.expr.IntegerLiteralExpr
 import com.github.javaparser.ast.expr.MethodCallExpr
 import com.github.javaparser.ast.expr.VariableDeclarationExpr
@@ -46,6 +48,10 @@ class JvmVariableDeclarationExpr(
             is IntegerLiteralExpr -> sb.append(initializer.value).append(';')
 
             is MethodCallExpr -> sb.append(JvmMethodCallExpr(initializer).translate())
+
+            is ArrayAccessExpr -> sb.append(initializer)
+
+            is BinaryExpr -> sb.append(initializer)
 
             else -> throw CodeUnsupportedException(expr)
         }
