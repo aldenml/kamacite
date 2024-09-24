@@ -9,6 +9,7 @@ package org.kamacite.tools.translators.jvm
 
 import com.github.javaparser.ast.type.PrimitiveType
 import com.github.javaparser.ast.type.PrimitiveType.Primitive.BYTE
+import com.github.javaparser.ast.type.PrimitiveType.Primitive.CHAR
 import com.github.javaparser.ast.type.PrimitiveType.Primitive.INT
 import org.kamacite.tools.CodeUnsupportedException
 
@@ -19,6 +20,7 @@ class JvmPrimitiveType(
     fun translate(): String = when (type.type) {
         BYTE -> "byte"
         INT -> "int"
+        CHAR -> "char"
         else -> throw CodeUnsupportedException(type)
     }
 }
