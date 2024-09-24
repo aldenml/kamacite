@@ -23,12 +23,12 @@ public class UtilTest {
         char[] strIn = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
         int strInLen = 9;
 
-        decimal2bin(n, strIn, strInLen, nLen);
+        decimal2bin(n, nLen, strIn, strInLen);
 
         char[] strOut = new char[9];
         int strOutLen = 9;
 
-        bin2decimal(strOut, n, nLen, strOutLen);
+        bin2decimal(strOut, strOutLen, n, nLen);
 
         assert_int_equals(strInLen, strOutLen);
         assert_string_equals(strIn, strOut, strInLen);
@@ -45,9 +45,9 @@ public class UtilTest {
         char[] strIn = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
         int strInLen = 9;
 
-        decimal2bin(n1, strIn, strInLen, n1Len);
+        decimal2bin(n1, n1Len, strIn, strInLen);
         strIn[0] = '2';
-        decimal2bin(n2, strIn, strInLen, n2Len);
+        decimal2bin(n2, n2Len, strIn, strInLen);
 
         assert_int_equals(n1Len, n2Len);
 
@@ -69,14 +69,14 @@ public class UtilTest {
         char[] strIn = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
         int strInLen = 9;
 
-        decimal2bin(n, strIn, strInLen, nLen);
+        decimal2bin(n, nLen, strIn, strInLen);
 
         add(n, n, nLen);
 
         char[] strOut = new char[9];
         int strOutLen = 9;
 
-        bin2decimal(strOut, n, nLen, strOutLen);
+        bin2decimal(strOut, strOutLen, n, nLen);
 
         // 246913578
         char[] strExpected = {'2', '4', '6', '9', '1', '3', '5', '7', '8'};

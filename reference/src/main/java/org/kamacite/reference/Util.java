@@ -12,20 +12,20 @@ public class Util {
     /**
      * out length: <code>len >= (strLen + 1) / 2 + 1</code>.
      */
-    public static void decimal2bin(byte[] out, char[] str, int strLen, int len) {
-        for (int idx = 0; idx < strLen; idx++) {
-            char c = str[idx];
+    public static void decimal2bin(byte[] out, int outLen, char[] str, int strLen) {
+        for (int j = 0; j < strLen; j++) {
+            char c = str[j];
             int digit = c - '0';
 
             int carry = 0;
-            for (int i = 0; i < len; i++) {
+            for (int i = 0; i < outLen; i++) {
                 int temp = (out[i] & 0xFF) * 10 + carry;
                 out[i] = (byte) temp;
                 carry = (temp >>> 8) & 0xFF;
             }
 
             carry = digit;
-            for (int i = 0; i < len; i++) {
+            for (int i = 0; i < outLen; i++) {
                 int temp = (out[i] & 0xFF) + carry;
                 out[i] = (byte) temp;
                 carry = (temp >>> 8) & 0xFF;
@@ -36,15 +36,15 @@ public class Util {
     /**
      * out length: <code>len >= nLen * 3 + 1</code>.
      */
-    public static void bin2decimal(char[] out, byte[] n, int nLen, int len) {
-        for (int i = 0; i < len; i++) {
+    public static void bin2decimal(char[] out, int outLen, byte[] n, int nLen) {
+        for (int i = 0; i < outLen; i++) {
             out[i] = '0';
         }
 
         for (int i = nLen - 1; i >= 0; i--) {
             int carry = n[i] & 0xFF;
 
-            for (int j = len - 1; j >= 0; j--) {
+            for (int j = outLen - 1; j >= 0; j--) {
                 int digit = out[j] - '0';
                 int temp = digit * 256 + carry;
                 out[j] = (char) ('0' + (temp % 10));
