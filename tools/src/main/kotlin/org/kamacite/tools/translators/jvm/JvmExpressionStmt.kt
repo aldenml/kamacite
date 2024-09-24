@@ -7,6 +7,8 @@
 
 package org.kamacite.tools.translators.jvm
 
+import com.github.javaparser.ast.expr.AssignExpr
+import com.github.javaparser.ast.expr.MethodCallExpr
 import com.github.javaparser.ast.expr.VariableDeclarationExpr
 import com.github.javaparser.ast.stmt.ExpressionStmt
 import org.kamacite.tools.CodeUnsupportedException
@@ -20,6 +22,10 @@ class JvmExpressionStmt(
         return when (expr) {
 
             is VariableDeclarationExpr -> JvmVariableDeclarationExpr(expr).translate()
+
+            is MethodCallExpr -> JvmMethodCallExpr(expr).translate()
+
+            is AssignExpr -> JvmAssignExpr(expr).translate()
 
             else -> throw CodeUnsupportedException(expr)
         }

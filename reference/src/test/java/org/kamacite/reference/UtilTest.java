@@ -9,8 +9,7 @@ package org.kamacite.reference;
 
 import org.junit.jupiter.api.Test;
 
-import static org.kamacite.reference.TestUtil.assert_int_equals;
-import static org.kamacite.reference.TestUtil.assert_string_equals;
+import static org.kamacite.reference.TestUtil.*;
 import static org.kamacite.reference.Util.*;
 
 public class UtilTest {
@@ -20,8 +19,9 @@ public class UtilTest {
         byte[] n = new byte[64];
         int nLen = 64;
 
-        char[] strIn = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
+        char[] strIn = new char[9];
         int strInLen = 9;
+        string2decimal(strIn, strInLen, "123456789");
 
         decimal2bin(n, nLen, strIn, strInLen);
 
@@ -42,8 +42,9 @@ public class UtilTest {
         int n2Len = 64;
 
 
-        char[] strIn = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
+        char[] strIn = new char[9];
         int strInLen = 9;
+        string2decimal(strIn, strInLen, "123456789");
 
         decimal2bin(n1, n1Len, strIn, strInLen);
         strIn[0] = '2';
@@ -66,8 +67,9 @@ public class UtilTest {
         byte[] n = new byte[64];
         int nLen = 64;
 
-        char[] strIn = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
+        char[] strIn = new char[9];
         int strInLen = 9;
+        string2decimal(strIn, strInLen, "123456789");
 
         decimal2bin(n, nLen, strIn, strInLen);
 
@@ -78,9 +80,9 @@ public class UtilTest {
 
         bin2decimal(strOut, strOutLen, n, nLen);
 
-        // 246913578
-        char[] strExpected = {'2', '4', '6', '9', '1', '3', '5', '7', '8'};
+        char[] strExpected = new char[9];
         int strExpectedLen = 9;
+        string2decimal(strExpected, strExpectedLen, "246913578");
 
         assert_int_equals(strExpectedLen, strOutLen);
         assert_string_equals(strExpected, strOut, strInLen);
