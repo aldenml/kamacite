@@ -20,24 +20,24 @@ abstract class JavaMethodDeclaration(
 
         validateMethodDeclaration()
 
-        sb.append(begin()).append(newLine())
+        sb.append(beginMethod()).append(newLine())
 
         val statements = methodDeclaration.body.get().statements
 
         statements.forEach { statement ->
-            val r = findFor(statement)
-            val s = indent(r.translate())
+            val tr = findFor(statement)
+            val s = indent(tr.translate())
             sb.append(s).append(newLine())
         }
 
-        sb.append(end()).append(newLine())
+        sb.append(endMethod()).append(newLine())
 
         return sb.toString()
     }
 
-    abstract fun begin(): String
+    abstract fun beginMethod(): String
 
-    abstract fun end(): String
+    abstract fun endMethod(): String
 
     private fun validateMethodDeclaration() {
         if (!methodDeclaration.isPublic)

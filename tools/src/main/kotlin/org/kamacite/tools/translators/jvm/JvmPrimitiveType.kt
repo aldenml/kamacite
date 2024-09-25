@@ -15,9 +15,9 @@ import org.kamacite.tools.CodeUnsupportedException
 
 class JvmPrimitiveType(
     val type: PrimitiveType,
-) {
+) : JvmTranslator {
 
-    fun translate(): String = when (type.type) {
+    override fun translate(): String = when (type.type) {
         BYTE -> "byte"
         INT -> "int"
         CHAR -> "char"

@@ -1,0 +1,48 @@
+/*
+ * Copyright (c) 2024, Alden Torres
+ *
+ * Licensed under the terms of the MIT license.
+ * Copy of the license at https://opensource.org/licenses/MIT
+ */
+
+package org.kamacite.tools.translators
+
+import com.github.javaparser.ast.type.ArrayType
+import com.github.javaparser.ast.type.PrimitiveType
+import com.github.javaparser.ast.type.PrimitiveType.Primitive.BYTE
+import com.github.javaparser.ast.type.PrimitiveType.Primitive.CHAR
+import com.github.javaparser.ast.type.Type
+import org.kamacite.tools.CodeUnsupportedException
+
+abstract class JavaArrayType(
+    val type: ArrayType,
+) : CodeTranslator {
+
+    override fun translate(): String {
+        val sb = StringBuilder()
+
+        if (type.arrayLevel != 1)
+            throw CodeUnsupportedException(type)
+
+        val elementType = type.elementType
+        validateElementType(elementType)
+
+        val s = declareArray(elementType.asPrimitiveType())
+        sb.append(s)
+
+        return sb.toString()
+    }
+
+    abstract fun declareArray(elementType: PrimitiveType): String
+
+    private fun validateElementType(type: Type) {
+        when (type) {
+
+            is PrimitiveType ->
+                if (type.type != CHAR && type.type != BYTE)
+                    throw CodeUnsupportedException(type)
+
+            else -> throw CodeUnsupportedException(type)
+        }
+    }
+}

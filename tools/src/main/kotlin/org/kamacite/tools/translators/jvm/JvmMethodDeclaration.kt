@@ -14,7 +14,7 @@ class JvmMethodDeclaration(
     methodDeclaration: MethodDeclaration,
 ) : JavaMethodDeclaration(methodDeclaration), JvmTranslator {
 
-    override fun begin(): String {
+    override fun beginMethod(): String {
         val sb = StringBuilder()
 
         val modifiers = methodDeclaration.modifiers.map { it ->
@@ -32,7 +32,7 @@ class JvmMethodDeclaration(
         return sb.toString()
     }
 
-    override fun end(): String {
+    override fun endMethod(): String {
         return "}"
     }
 }

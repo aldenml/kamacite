@@ -9,29 +9,15 @@ package org.kamacite.tools.translators.jvm
 
 import com.github.javaparser.ast.type.ArrayType
 import com.github.javaparser.ast.type.PrimitiveType
-import org.kamacite.tools.CodeUnsupportedException
+import org.kamacite.tools.translators.JavaArrayType
 
 class JvmArrayType(
-    val type: ArrayType,
-) {
+    type: ArrayType,
+) : JavaArrayType(type), JvmTranslator {
 
-    fun translate(): String {
-        val sb = StringBuilder()
-
-        if (type.arrayLevel != 1)
-            throw CodeUnsupportedException(type)
-
-        val elementType = type.elementType
-
-        when (elementType) {
-
-            is PrimitiveType ->
-                sb.append(JvmPrimitiveType(elementType).translate())
-                    .append("[]")
-
-            else -> throw CodeUnsupportedException(type)
-        }
-
-        return sb.toString()
+    override fun declareArray(elementType: PrimitiveType): String {
+        val tr = findFor(elementType)
+        val tp = tr.translate()
+        return "$tp[]"
     }
 }

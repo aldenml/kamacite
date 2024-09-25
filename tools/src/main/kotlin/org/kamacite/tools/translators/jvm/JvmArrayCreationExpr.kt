@@ -9,34 +9,15 @@ package org.kamacite.tools.translators.jvm
 
 import com.github.javaparser.ast.expr.ArrayCreationExpr
 import com.github.javaparser.ast.type.PrimitiveType
-import org.kamacite.tools.CodeUnsupportedException
+import org.kamacite.tools.translators.JavaArrayCreationExpr
 
 class JvmArrayCreationExpr(
-    val expr: ArrayCreationExpr,
-) {
+    expr: ArrayCreationExpr,
+) : JavaArrayCreationExpr(expr), JvmTranslator {
 
-    fun translate(): String {
-        val sb = StringBuilder()
-
-        if (expr.levels.count() != 1)
-            throw CodeUnsupportedException(expr)
-
-        val elementType = expr.elementType
-        val size = expr.levels[0].dimension.get()
-
-        when (elementType) {
-
-            is PrimitiveType ->
-                sb.append("new ")
-                    .append(JvmPrimitiveType(elementType).translate())
-                    .append('[')
-                    .append(size)
-                    .append(']')
-                    .append(';')
-
-            else -> throw CodeUnsupportedException(expr)
-        }
-
-        return sb.toString()
+    override fun newArray(elementType: PrimitiveType, size: Int): String {
+        val tr = findFor(elementType)
+        val tp = tr.translate()
+        return "new $tp[$size];"
     }
 }

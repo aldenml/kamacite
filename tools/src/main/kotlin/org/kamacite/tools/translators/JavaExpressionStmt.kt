@@ -15,7 +15,7 @@ abstract class JavaExpressionStmt(
 
     override fun translate(): String {
         val expr = stmt.expression
-        val r = findFor(expr)
-        return r.translate()
+        val tr = findFor(expr)
+        return tr.translate()
     }
 }
