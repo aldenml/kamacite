@@ -13,9 +13,9 @@ import org.kamacite.tools.CodeUnsupportedException
 
 class JvmReturnStmt(
     val stmt: ReturnStmt,
-) {
+) : JvmTranslator {
 
-    fun translate(): String {
+    override fun translate(): String {
         val sb = StringBuilder()
 
         sb.append("return ")

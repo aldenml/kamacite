@@ -19,9 +19,9 @@ import org.kamacite.tools.CodeUnsupportedException
 
 class JvmVariableDeclarationExpr(
     val expr: VariableDeclarationExpr,
-) {
+) : JvmTranslator {
 
-    fun translate(): String {
+    override fun translate(): String {
         val sb = StringBuilder()
 
         if (expr.variables.count() != 1)

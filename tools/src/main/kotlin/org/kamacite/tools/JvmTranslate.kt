@@ -8,13 +8,13 @@
 package org.kamacite.tools
 
 import org.kamacite.tools.parser.ReferenceParser
-import org.kamacite.tools.translators.jvm.JvmTranslator
+import org.kamacite.tools.translators.jvm.JvmFileTranslator
 
 fun main() {
 
     val parser = ReferenceParser()
 
     parser.parse().forEach { file ->
-        JvmTranslator(file).translate()
+        JvmFileTranslator(file).translate()
     }
 }

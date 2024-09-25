@@ -13,9 +13,9 @@ import org.kamacite.tools.CodeUnsupportedException
 
 class JvmForStmt(
     val stmt: ForStmt,
-) {
+) : JvmTranslator {
 
-    fun translate(): String {
+    override fun translate(): String {
         val sb = StringBuilder()
 
         sb.append("for(${stmt.initialization}; ${stmt.compare}; ${stmt.update}) {")

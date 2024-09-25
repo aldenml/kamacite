@@ -20,9 +20,9 @@ import org.kamacite.tools.CodeUnsupportedException
 
 class JvmAssignExpr(
     val expr: AssignExpr,
-) {
+) : JvmTranslator {
 
-    fun translate(): String {
+    override fun translate(): String {
         val sb = StringBuilder()
 
         val target = expr.target

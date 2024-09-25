@@ -7,14 +7,10 @@
 
 package org.kamacite.tools.translators.jvm
 
-import org.kamacite.tools.parser.JavaFile
-import org.kamacite.tools.translators.FileTranslator
+import org.kamacite.tools.translators.CodeTranslator
 
-class JvmTranslator(file: JavaFile) : FileTranslator(file) {
+interface JvmTranslator : CodeTranslator {
 
-    override fun translate() {
-        file.methods().forEach { method ->
-            JvmMethodDeclaration(method.methodDeclaration).translate()
-        }
-    }
+    override val target: CodeTranslator.Target
+        get() = CodeTranslator.Target.JVM
 }

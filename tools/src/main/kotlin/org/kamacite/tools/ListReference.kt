@@ -17,7 +17,7 @@ fun main() {
 
         file.methods().forEach { method ->
 
-            println("${file.name()}:${method.name()}")
+            println("${file.name().removeSuffix(".java")}:${method.name()}")
         }
     }
 }

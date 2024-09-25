@@ -14,7 +14,7 @@ import com.github.javaparser.ast.stmt.ForStmt
 import org.kamacite.tools.CodeUnsupportedException
 
 class JvmBlockStmt(
-    val stmt: BlockStmt
+    val stmt: BlockStmt,
 ) {
 
     fun translate(): String {

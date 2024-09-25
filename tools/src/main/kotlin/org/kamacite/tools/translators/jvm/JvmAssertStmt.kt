@@ -11,7 +11,7 @@ import com.github.javaparser.ast.stmt.AssertStmt
 
 class JvmAssertStmt(
     val stmt: AssertStmt,
-) {
+) : JvmTranslator {
 
-    fun translate(): String = stmt.toString()
+    override fun translate(): String = stmt.toString()
 }

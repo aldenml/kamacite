@@ -26,7 +26,10 @@ class FileParseException(
 
 class CodeUnsupportedException(
     val node: Node,
-) : Exception() {
+    cause: Throwable?,
+) : Exception(cause) {
+
+    constructor(node: Node) : this(node, null)
 
     override val message: String?
         get() {

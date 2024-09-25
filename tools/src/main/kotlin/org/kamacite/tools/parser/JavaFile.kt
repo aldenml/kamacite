@@ -16,7 +16,7 @@ class JavaFile(
 ) {
 
     fun name(): String {
-        return compilationUnit.storage.get().fileName.removeSuffix(".java")
+        return compilationUnit.storage.get().fileName
     }
 
     fun methods(): List<JavaMethod> {

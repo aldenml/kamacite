@@ -11,9 +11,9 @@ import com.github.javaparser.ast.expr.MethodCallExpr
 
 class JvmMethodCallExpr(
     val methodCall: MethodCallExpr
-) {
+) : JvmTranslator {
 
-    fun translate(): String {
+    override fun translate(): String {
         return methodCall.toString()
     }
 }
