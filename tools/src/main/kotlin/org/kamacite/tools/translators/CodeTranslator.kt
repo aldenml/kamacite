@@ -36,6 +36,12 @@ interface CodeTranslator {
         }
     }
 
+    fun fileName(node: Node): String {
+        return node.findCompilationUnit().get()
+            .storage.get()
+            .fileName
+    }
+
     fun newLine() = System.lineSeparator()
 
     fun indent(s: String): String {

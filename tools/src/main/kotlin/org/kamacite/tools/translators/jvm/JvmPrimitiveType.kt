@@ -20,7 +20,13 @@ class JvmPrimitiveType(
     override fun translate(): String = when (type.type) {
         BYTE -> "byte"
         INT -> "int"
-        CHAR -> "char"
+        CHAR -> {
+            val fileName = fileName(type)
+            if (!fileName.contains("Test") && !fileName.contains("Util"))
+                throw CodeUnsupportedException(type)
+            "char"
+        }
+
         else -> throw CodeUnsupportedException(type)
     }
 }

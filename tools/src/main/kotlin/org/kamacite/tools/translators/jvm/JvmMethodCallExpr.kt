@@ -8,12 +8,8 @@
 package org.kamacite.tools.translators.jvm
 
 import com.github.javaparser.ast.expr.MethodCallExpr
+import org.kamacite.tools.translators.JavaMethodCallExpr
 
 class JvmMethodCallExpr(
-    val methodCall: MethodCallExpr
-) : JvmTranslator {
-
-    override fun translate(): String {
-        return methodCall.toString()
-    }
-}
+    methodCall: MethodCallExpr
+) : JavaMethodCallExpr(methodCall), JvmTranslator
