@@ -27,7 +27,16 @@ class JvmMethodDeclaration(
         if (name.startsWith("test_"))
             sb.append("@Test").append(newLine())
 
-        sb.append("$modifiers $returnType $name() {")
+        sb.append("$modifiers $returnType $name(")
+
+        val args = methodDeclaration.parameters.map { parameter ->
+            val tr = findFor(parameter)
+            tr.translate()
+        }.joinToString(", ")
+
+        sb.append(args)
+
+        sb.append(") {")
 
         return sb.toString()
     }

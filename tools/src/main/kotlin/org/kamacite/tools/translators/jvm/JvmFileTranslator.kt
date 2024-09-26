@@ -10,12 +10,12 @@ package org.kamacite.tools.translators.jvm
 import org.kamacite.tools.parser.JavaFile
 import org.kamacite.tools.translators.FileTranslator
 
-class JvmFileTranslator(file: JavaFile) : FileTranslator(file) {
+class JvmFileTranslator(
+    file: JavaFile,
+) : FileTranslator(file) {
 
     override fun translate() {
-        file.methods().forEach { method ->
-            val r = JvmMethodDeclaration(method.methodDeclaration).translate()
-            println(r)
-        }
+        val tr = JvmCompilationUnit(file.compilationUnit)
+        println(tr.translate())
     }
 }

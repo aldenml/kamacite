@@ -20,7 +20,7 @@ class JvmForStmt(
         compare: Expression,
         update: Expression,
     ): String {
-        return "for(${initialization}; ${compare}; ${update}) {"
+        return "for (${initialization}; ${compare}; ${update}) {"
     }
 
     override fun endFor(): String {
