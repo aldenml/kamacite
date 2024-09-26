@@ -8,10 +8,11 @@
 package org.kamacite.tools.translators.jvm
 
 import com.github.javaparser.ast.stmt.AssertStmt
+import org.kamacite.tools.translators.JavaAssertStmt
 
 class JvmAssertStmt(
-    val stmt: AssertStmt,
-) : JvmTranslator {
+    stmt: AssertStmt,
+) : JavaAssertStmt(stmt), JvmTranslator {
 
     override fun translate(): String = stmt.toString()
 }
