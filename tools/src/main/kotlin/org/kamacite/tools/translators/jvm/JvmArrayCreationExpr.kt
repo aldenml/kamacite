@@ -18,6 +18,6 @@ class JvmArrayCreationExpr(
     override fun newArray(elementType: PrimitiveType, size: Int): String {
         val tr = findFor(elementType)
         val tp = tr.translate()
-        return "new $tp[$size];"
+        return "new $tp[$size]"
     }
 }

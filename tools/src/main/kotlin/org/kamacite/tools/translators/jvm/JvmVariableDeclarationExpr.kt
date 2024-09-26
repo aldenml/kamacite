@@ -7,55 +7,24 @@
 
 package org.kamacite.tools.translators.jvm
 
-import com.github.javaparser.ast.expr.ArrayAccessExpr
-import com.github.javaparser.ast.expr.ArrayCreationExpr
-import com.github.javaparser.ast.expr.BinaryExpr
-import com.github.javaparser.ast.expr.IntegerLiteralExpr
-import com.github.javaparser.ast.expr.MethodCallExpr
 import com.github.javaparser.ast.expr.VariableDeclarationExpr
 import com.github.javaparser.ast.type.ArrayType
 import com.github.javaparser.ast.type.PrimitiveType
-import org.kamacite.tools.CodeUnsupportedException
+import org.kamacite.tools.translators.JavaVariableDeclarationExpr
 
 class JvmVariableDeclarationExpr(
-    val expr: VariableDeclarationExpr,
-) : JvmTranslator {
+    expr: VariableDeclarationExpr,
+) : JavaVariableDeclarationExpr(expr), JvmTranslator {
 
-    override fun translate(): String {
-        val sb = StringBuilder()
+    override fun declareArrayVariable(type: ArrayType, name: String): String {
+        val tr = findFor(type)
+        val tp = tr.translate()
+        return "$tp $name"
+    }
 
-        if (expr.variables.count() != 1)
-            throw CodeUnsupportedException(expr)
-
-        val type = expr.commonType
-        when (type) {
-
-            is ArrayType ->
-                sb.append(JvmArrayType(type).translate()).append(' ')
-
-            is PrimitiveType ->
-                sb.append(JvmPrimitiveType(type).translate()).append(' ')
-        }
-
-        val variable = expr.variables[0]
-        sb.append(variable.name).append(" = ")
-
-        val initializer = variable.initializer.get()
-        when (initializer) {
-
-            is ArrayCreationExpr -> sb.append(JvmArrayCreationExpr(initializer).translate())
-
-            is IntegerLiteralExpr -> sb.append(initializer.value).append(';')
-
-            is MethodCallExpr -> sb.append(JvmMethodCallExpr(initializer).translate())
-
-            is ArrayAccessExpr -> sb.append(initializer)
-
-            is BinaryExpr -> sb.append(initializer)
-
-            else -> throw CodeUnsupportedException(expr)
-        }
-
-        return sb.toString()
+    override fun declareVariable(type: PrimitiveType, name: String): String {
+        val tr = findFor(type)
+        val tp = tr.translate()
+        return "$tp $name"
     }
 }

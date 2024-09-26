@@ -48,7 +48,7 @@ abstract class JavaMethodCallExpr(
         }
 
         sb.append(args)
-            .append(");")
+            .append(")")
 
         return sb.toString()
     }

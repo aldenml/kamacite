@@ -5,11 +5,13 @@
  * Copy of the license at https://opensource.org/licenses/MIT
  */
 
-package org.kamacite.tools.translators.jvm
+package org.kamacite.tools.translators
 
 import com.github.javaparser.ast.stmt.Statement
-import org.kamacite.tools.translators.JavaStatement
 
-class JvmStatement(
-    stmt: Statement,
-) : JavaStatement(stmt), JvmTranslator
+abstract class JavaStatement(
+    val stmt: Statement,
+) : CodeTranslator {
+
+    override fun translate(): String = findFor(stmt).translate()
+}
