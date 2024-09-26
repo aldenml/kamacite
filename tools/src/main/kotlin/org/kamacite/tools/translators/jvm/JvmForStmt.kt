@@ -7,29 +7,23 @@
 
 package org.kamacite.tools.translators.jvm
 
-import com.github.javaparser.ast.stmt.BlockStmt
+import com.github.javaparser.ast.expr.Expression
 import com.github.javaparser.ast.stmt.ForStmt
-import org.kamacite.tools.CodeUnsupportedException
+import org.kamacite.tools.translators.JavaForStmt
 
 class JvmForStmt(
-    val stmt: ForStmt,
-) : JvmTranslator {
+    stmt: ForStmt,
+) : JavaForStmt(stmt), JvmTranslator {
 
-    override fun translate(): String {
-        val sb = StringBuilder()
+    override fun beginFor(
+        initialization: Expression,
+        compare: Expression,
+        update: Expression,
+    ): String {
+        return "for(${initialization}; ${compare}; ${update}) {"
+    }
 
-        sb.append("for(${stmt.initialization}; ${stmt.compare}; ${stmt.update}) {")
-
-        val body = stmt.body
-        when (body) {
-
-            is BlockStmt -> sb.append(JvmBlockStmt(body).translate())
-
-            else -> throw CodeUnsupportedException(stmt)
-        }
-
-        sb.append('}')
-
-        return sb.toString()
+    override fun endFor(): String {
+        return "}"
     }
 }
