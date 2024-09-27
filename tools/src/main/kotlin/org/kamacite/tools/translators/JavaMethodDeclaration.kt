@@ -18,7 +18,19 @@ abstract class JavaMethodDeclaration(
     override fun translate(): String {
         val sb = StringBuilder()
 
-        validateMethodDeclaration()
+        if (!methodDeclaration.isPublic)
+            throw CodeUnsupportedException(methodDeclaration)
+
+        val isTest = methodDeclaration.nameAsString.startsWith("test_")
+        if (!(isTest || methodDeclaration.isStatic))
+            throw CodeUnsupportedException(methodDeclaration)
+
+        val returnType = methodDeclaration.type
+        if (!returnType.isVoidType && returnType != PrimitiveType.intType())
+            throw CodeUnsupportedException(methodDeclaration)
+
+        if (methodDeclaration.thrownExceptions.count() > 0)
+            throw CodeUnsupportedException(methodDeclaration)
 
         sb.append(beginMethod()).append(newLine())
 
@@ -38,20 +50,4 @@ abstract class JavaMethodDeclaration(
     abstract fun beginMethod(): String
 
     abstract fun endMethod(): String
-
-    private fun validateMethodDeclaration() {
-        if (!methodDeclaration.isPublic)
-            throw CodeUnsupportedException(methodDeclaration)
-
-        val isTest = methodDeclaration.nameAsString.startsWith("test_")
-        if (!(isTest || methodDeclaration.isStatic))
-            throw CodeUnsupportedException(methodDeclaration)
-
-        val returnType = methodDeclaration.type
-        if (!returnType.isVoidType && returnType != PrimitiveType.intType())
-            throw CodeUnsupportedException(methodDeclaration)
-
-        if (methodDeclaration.thrownExceptions.count() > 0)
-            throw CodeUnsupportedException(methodDeclaration)
-    }
 }

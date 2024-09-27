@@ -21,35 +21,31 @@ abstract class JavaMethodCallExpr(
     override fun translate(): String {
         val sb = StringBuilder()
 
-        sb.append(methodCall.nameAsString)
-            .append('(')
-
-        val args = methodCall.arguments.joinToString { arg ->
+        methodCall.arguments.forEach { arg ->
             when (arg) {
 
-                is NameExpr -> arg.name.toString()
+                is NameExpr -> Unit //
 
-                is IntegerLiteralExpr -> arg.value.toString()
+                is IntegerLiteralExpr -> Unit
 
                 is UnaryExpr -> {
                     if (!arg.expression.isIntegerLiteralExpr)
                         throw CodeUnsupportedException(methodCall)
-                    arg.toString()
                 }
 
                 is StringLiteralExpr -> {
-                    if (!fileName(methodCall).contains("Test"))
+                    if (!isTestCode(methodCall))
                         throw CodeUnsupportedException(methodCall)
-                    "\"${arg.value}\""
                 }
 
                 else -> throw CodeUnsupportedException(methodCall)
             }
         }
 
-        sb.append(args)
-            .append(")")
+        sb.append(invokeMethod())
 
         return sb.toString()
     }
+
+    abstract fun invokeMethod(): String
 }

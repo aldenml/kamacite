@@ -11,7 +11,6 @@ import com.github.javaparser.ast.expr.ArrayCreationExpr
 import com.github.javaparser.ast.type.PrimitiveType
 import com.github.javaparser.ast.type.PrimitiveType.Primitive.BYTE
 import com.github.javaparser.ast.type.PrimitiveType.Primitive.CHAR
-import com.github.javaparser.ast.type.Type
 import org.kamacite.tools.CodeUnsupportedException
 
 abstract class JavaArrayCreationExpr(
@@ -21,30 +20,29 @@ abstract class JavaArrayCreationExpr(
     override fun translate(): String {
         val sb = StringBuilder()
 
-        if (expr.levels.count() != 1)
+        val levels = expr.levels
+        if (levels.count() != 1 || levels[0].dimension.isEmpty)
             throw CodeUnsupportedException(expr)
 
-        val elementType = expr.elementType
-        val size = expr.levels[0].dimension.get().toString().toInt()
+        val type = expr.elementType
+        when (type) {
 
-        validateElementType(elementType)
+            is PrimitiveType -> {
+                if (type.type == CHAR && !isUtilOrTestCode(expr))
+                    throw CodeUnsupportedException(type)
 
-        val s = newArray(elementType.asPrimitiveType(), size)
+                if (type.type != BYTE && type.type != CHAR)
+                    throw CodeUnsupportedException(type)
+            }
+
+            else -> throw CodeUnsupportedException(type)
+        }
+
+        val s = newArray()
         sb.append(s)
 
         return sb.toString()
     }
 
-    abstract fun newArray(elementType: PrimitiveType, size: Int): String
-
-    private fun validateElementType(type: Type) {
-        when (type) {
-
-            is PrimitiveType ->
-                if (type.type != CHAR && type.type != BYTE)
-                    throw CodeUnsupportedException(type)
-
-            else -> throw CodeUnsupportedException(type)
-        }
-    }
+    abstract fun newArray(): String
 }

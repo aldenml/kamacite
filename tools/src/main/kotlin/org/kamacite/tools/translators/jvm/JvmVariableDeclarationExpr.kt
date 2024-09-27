@@ -7,24 +7,50 @@
 
 package org.kamacite.tools.translators.jvm
 
+import com.github.javaparser.ast.expr.ArrayCreationExpr
+import com.github.javaparser.ast.expr.MethodCallExpr
 import com.github.javaparser.ast.expr.VariableDeclarationExpr
-import com.github.javaparser.ast.type.ArrayType
-import com.github.javaparser.ast.type.PrimitiveType
 import org.kamacite.tools.translators.JavaVariableDeclarationExpr
 
 class JvmVariableDeclarationExpr(
     expr: VariableDeclarationExpr,
 ) : JavaVariableDeclarationExpr(expr), JvmTranslator {
 
-    override fun declareArrayVariable(type: ArrayType, name: String): String {
-        val tr = findFor(type)
-        val tp = tr.translate()
-        return "$tp $name"
-    }
+    override fun declareVariable(): String {
+        val sb = StringBuilder()
 
-    override fun declareVariable(type: PrimitiveType, name: String): String {
+        val variable = expr.variables[0]
+        val initializer = variable.initializer.get()
+
+        val type = expr.commonType
         val tr = findFor(type)
-        val tp = tr.translate()
-        return "$tp $name"
+        val s = tr.translate()
+        sb.append(s).append(' ')
+
+        val name = variable.nameAsString
+        sb.append(name)
+
+        sb.append(" = ")
+
+        when (initializer) {
+
+            is ArrayCreationExpr -> {
+                val tr = findFor(initializer)
+                val s = tr.translate()
+                sb.append(s)
+            }
+
+            is MethodCallExpr -> {
+                val tr = findFor(initializer)
+                val s = tr.translate().removeSuffix(";")
+                sb.append(s)
+            }
+
+            else -> sb.append(initializer.toString())
+        }
+
+        sb.append(';')
+
+        return sb.toString()
     }
 }

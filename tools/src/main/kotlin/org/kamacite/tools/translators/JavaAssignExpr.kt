@@ -33,44 +33,39 @@ abstract class JavaAssignExpr(
                     throw CodeUnsupportedException(expr)
                 if (!target.index.isNameExpr && !target.index.isIntegerLiteralExpr)
                     throw CodeUnsupportedException(expr)
-
-                val name = target.name.toString()
-                val index = target.index.toString()
-                val s = assignToArray(name, index)
-                sb.append(s)
             }
 
-            is NameExpr -> sb.append(target)
+            is NameExpr -> Unit
 
             else -> throw CodeUnsupportedException(expr)
         }
 
-        sb.append(" = ")
+        val value = expr.value
+        when (value) {
 
-        val valueExpr = expr.value
-        val value = when (valueExpr) {
+            is CharLiteralExpr ->
+                if (!isUtilOrTestCode(expr))
+                    throw CodeUnsupportedException(expr)
 
-            is CharLiteralExpr -> valueExpr.toString()
+            is MethodCallExpr -> Unit
 
-            is MethodCallExpr -> findFor(valueExpr).translate()
+            is CastExpr -> Unit
 
-            is CastExpr -> valueExpr.toString()
+            is BinaryExpr -> Unit
 
-            is BinaryExpr -> valueExpr.toString()
+            is NameExpr -> Unit
 
-            is NameExpr -> valueExpr.toString()
+            is EnclosedExpr -> Unit
 
-            is EnclosedExpr -> valueExpr.toString()
-
-            is IntegerLiteralExpr -> valueExpr.toString()
+            is IntegerLiteralExpr -> Unit
 
             else -> throw CodeUnsupportedException(expr)
         }
 
-        sb.append(value).append(';')
+        sb.append(assignExpression())
 
         return sb.toString()
     }
 
-    abstract fun assignToArray(name: String, index: String): String
+    abstract fun assignExpression(): String
 }

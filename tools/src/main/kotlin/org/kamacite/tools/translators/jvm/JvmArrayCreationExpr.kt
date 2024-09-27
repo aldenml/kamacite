@@ -8,16 +8,19 @@
 package org.kamacite.tools.translators.jvm
 
 import com.github.javaparser.ast.expr.ArrayCreationExpr
-import com.github.javaparser.ast.type.PrimitiveType
 import org.kamacite.tools.translators.JavaArrayCreationExpr
 
 class JvmArrayCreationExpr(
     expr: ArrayCreationExpr,
 ) : JavaArrayCreationExpr(expr), JvmTranslator {
 
-    override fun newArray(elementType: PrimitiveType, size: Int): String {
+    override fun newArray(): String {
+        val elementType = expr.elementType
+        val size = expr.levels[0].dimension.get().toString().toInt()
+
         val tr = findFor(elementType)
         val tp = tr.translate()
+
         return "new $tp[$size]"
     }
 }

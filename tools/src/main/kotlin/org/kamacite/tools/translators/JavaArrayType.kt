@@ -11,7 +11,6 @@ import com.github.javaparser.ast.type.ArrayType
 import com.github.javaparser.ast.type.PrimitiveType
 import com.github.javaparser.ast.type.PrimitiveType.Primitive.BYTE
 import com.github.javaparser.ast.type.PrimitiveType.Primitive.CHAR
-import com.github.javaparser.ast.type.Type
 import org.kamacite.tools.CodeUnsupportedException
 
 abstract class JavaArrayType(
@@ -24,25 +23,25 @@ abstract class JavaArrayType(
         if (type.arrayLevel != 1)
             throw CodeUnsupportedException(type)
 
-        val elementType = type.elementType
-        validateElementType(elementType)
+        val type = type.elementType
+        when (type) {
 
-        val s = declareArray(elementType.asPrimitiveType())
+            is PrimitiveType -> {
+                if (type.type == CHAR && !isUtilOrTestCode(type))
+                    throw CodeUnsupportedException(type)
+
+                if (type.type != BYTE && type.type != CHAR)
+                    throw CodeUnsupportedException(type)
+            }
+
+            else -> throw CodeUnsupportedException(type)
+        }
+
+        val s = declareArray()
         sb.append(s)
 
         return sb.toString()
     }
 
-    abstract fun declareArray(elementType: PrimitiveType): String
-
-    private fun validateElementType(type: Type) {
-        when (type) {
-
-            is PrimitiveType ->
-                if (type.type != CHAR && type.type != BYTE)
-                    throw CodeUnsupportedException(type)
-
-            else -> throw CodeUnsupportedException(type)
-        }
-    }
+    abstract fun declareArray(): String
 }

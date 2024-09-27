@@ -42,11 +42,19 @@ interface CodeTranslator {
             .fileName
     }
 
+    fun isTestCode(node: Node): Boolean {
+        return fileName(node).endsWith("Test.java")
+    }
+
+    fun isUtilOrTestCode(node: Node): Boolean {
+        return fileName(node).endsWith("Util.java") || isTestCode(node)
+    }
+
     fun newLine() = System.lineSeparator()
 
     fun indent(s: String): String {
         val indentWith = 4
 
-        return s.replaceIndent(" ".repeat(indentWith))
+        return s.prependIndent(" ".repeat(indentWith))
     }
 }

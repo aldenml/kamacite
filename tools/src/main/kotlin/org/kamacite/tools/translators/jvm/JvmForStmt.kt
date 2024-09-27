@@ -7,7 +7,6 @@
 
 package org.kamacite.tools.translators.jvm
 
-import com.github.javaparser.ast.expr.Expression
 import com.github.javaparser.ast.stmt.ForStmt
 import org.kamacite.tools.translators.JavaForStmt
 
@@ -15,11 +14,11 @@ class JvmForStmt(
     stmt: ForStmt,
 ) : JavaForStmt(stmt), JvmTranslator {
 
-    override fun beginFor(
-        initialization: Expression,
-        compare: Expression,
-        update: Expression,
-    ): String {
+    override fun beginFor(): String {
+        val initialization = stmt.initialization[0]
+        val compare = stmt.compare.get()
+        val update = stmt.update[0]
+
         return "for (${initialization}; ${compare}; ${update}) {"
     }
 

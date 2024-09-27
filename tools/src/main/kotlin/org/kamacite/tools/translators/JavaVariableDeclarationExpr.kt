@@ -37,45 +37,34 @@ abstract class JavaVariableDeclarationExpr(
         val type = expr.commonType
         when (type) {
 
-            is ArrayType -> {
-                if (variable.initializer.isPresent &&
-                    variable.initializer.get() is ArrayCreationExpr
-                ) {
-                    val s = declareArrayVariable(type, variable.name.toString())
-                    sb.append(s)
-                } else
+            is ArrayType ->
+                if (variable.initializer.isEmpty ||
+                    variable.initializer.get() !is ArrayCreationExpr
+                )
                     throw CodeUnsupportedException(expr)
-            }
 
-            is PrimitiveType -> {
-                val s = declareVariable(type, variable.name.toString())
-                sb.append(s)
-            }
+            is PrimitiveType -> Unit
         }
 
-        sb.append(" = ")
+        when (initializer) {
 
-        val value = when (initializer) {
+            is ArrayCreationExpr -> Unit
 
-            is ArrayCreationExpr -> findFor(initializer).translate()
+            is IntegerLiteralExpr -> Unit
 
-            is IntegerLiteralExpr -> initializer.value.toString()
+            is MethodCallExpr -> Unit
 
-            is MethodCallExpr -> findFor(initializer).translate()
+            is ArrayAccessExpr -> Unit
 
-            is ArrayAccessExpr -> initializer.toString()
-
-            is BinaryExpr -> initializer.toString()
+            is BinaryExpr -> Unit
 
             else -> throw CodeUnsupportedException(expr)
         }
 
-        sb.append(value).append(';')
+        sb.append(declareVariable())
 
         return sb.toString()
     }
 
-    abstract fun declareArrayVariable(type: ArrayType, name: String): String
-
-    abstract fun declareVariable(type: PrimitiveType, name: String): String
+    abstract fun declareVariable(): String
 }

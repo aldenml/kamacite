@@ -12,4 +12,19 @@ import org.kamacite.tools.translators.JavaMethodCallExpr
 
 class JvmMethodCallExpr(
     methodCall: MethodCallExpr
-) : JavaMethodCallExpr(methodCall), JvmTranslator
+) : JavaMethodCallExpr(methodCall), JvmTranslator {
+
+    override fun invokeMethod(): String {
+        val sb = StringBuilder()
+
+        sb.append(methodCall.nameAsString).append('(')
+
+        val args = methodCall.arguments.joinToString { arg ->
+            arg.toString()
+        }
+
+        sb.append(args).append(");")
+
+        return sb.toString()
+    }
+}

@@ -7,7 +7,6 @@
 
 package org.kamacite.tools.translators
 
-import com.github.javaparser.ast.expr.Expression
 import com.github.javaparser.ast.stmt.BlockStmt
 import com.github.javaparser.ast.stmt.ForStmt
 import org.kamacite.tools.CodeUnsupportedException
@@ -24,13 +23,7 @@ abstract class JavaForStmt(
         if (stmt.update.count() != 1)
             throw CodeUnsupportedException(stmt)
 
-        val initialization = stmt.initialization[0]
-        val compare = stmt.compare.get()
-        val update = stmt.update[0]
-
-        validateForExpressions(initialization, compare, update)
-
-        sb.append(beginFor(initialization, compare, update)).append(newLine())
+        sb.append(beginFor()).append(newLine())
 
         val body = stmt.body
         val statements = when (body) {
@@ -51,19 +44,7 @@ abstract class JavaForStmt(
         return sb.toString()
     }
 
-    abstract fun beginFor(
-        initialization: Expression,
-        compare: Expression,
-        update: Expression
-    ): String
+    abstract fun beginFor(): String
 
     abstract fun endFor(): String
-
-    private fun validateForExpressions(
-        initialization: Expression,
-        compare: Expression,
-        update: Expression
-    ) {
-
-    }
 }

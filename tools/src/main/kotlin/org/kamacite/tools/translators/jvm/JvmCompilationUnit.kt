@@ -15,7 +15,7 @@ class JvmCompilationUnit(
 ) : JavaCompilationUnit(compilationUnit), JvmTranslator {
 
     override fun beginFile(): String {
-        val className = file.name().removeSuffix(".java")
+        val className = fileName(compilationUnit).removeSuffix(".java")
         return "public class $className {"
     }
 
