@@ -28,6 +28,8 @@ class JvmReturnStmt(
             else -> throw CodeUnsupportedException(expr)
         }
 
+        sb.append(';')
+
         return sb.toString()
     }
 }

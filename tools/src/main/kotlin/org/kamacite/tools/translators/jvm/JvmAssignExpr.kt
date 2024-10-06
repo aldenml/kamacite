@@ -42,7 +42,10 @@ class JvmAssignExpr(
             else -> valueExpr.toString()
         }
 
-        sb.append(value).append(';')
+        sb.append(value)
+
+        if (!value.endsWith(';'))
+            sb.append(';')
 
         return sb.toString()
     }

@@ -5,3 +5,7 @@ rootProject.name = "kamacite"
 
 include("reference")
 include("tools")
+
+// jvm translation
+include("jvm")
+project(":jvm").projectDir = file("translations/jvm")

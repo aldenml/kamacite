@@ -15,8 +15,31 @@ class JvmCompilationUnit(
 ) : JavaCompilationUnit(compilationUnit), JvmTranslator {
 
     override fun beginFile(): String {
+        val sb = StringBuilder()
+
+        val license = compilationUnit.comment.get()
+        sb.append(license).append(newLine())
+
+        val packageName = compilationUnit.packageDeclaration.get().toString()
+            .replace(".reference", ".internal")
+            .trim()
+        sb.append(packageName)
+            .append(newLine())
+            .append(newLine())
+
+        val imports = compilationUnit.imports.map {
+            it.toString()
+                .trim()
+                .replace(".reference.", ".internal.")
+        }.joinToString(newLine())
+        sb.append(imports)
+            .append(newLine())
+            .append(newLine())
+
         val className = fileName(compilationUnit).removeSuffix(".java")
-        return "public class $className {"
+        sb.append("public class $className {").append(newLine())
+
+        return sb.toString()
     }
 
     override fun endFile(): String {

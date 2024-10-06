@@ -17,6 +17,9 @@ class JvmMethodCallExpr(
     override fun invokeMethod(): String {
         val sb = StringBuilder()
 
+        if (methodCall.scope.isPresent)
+            sb.append(methodCall.scope.get()).append(".")
+
         sb.append(methodCall.nameAsString).append('(')
 
         val args = methodCall.arguments.joinToString { arg ->
