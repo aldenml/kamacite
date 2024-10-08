@@ -5,11 +5,11 @@
  * Copy of the license at https://opensource.org/licenses/MIT
  */
 
-package org.kamacite.internal;
+package org.kamacite.jvm;
 
 import org.junit.jupiter.api.Test;
-import static org.kamacite.internal.TestUtil.*;
-import static org.kamacite.internal.Util.*;
+import static org.kamacite.jvm.TestUtil.*;
+import static org.kamacite.jvm.Util.*;
 
 public class UtilTest {
 

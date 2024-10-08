@@ -21,7 +21,7 @@ class JvmCompilationUnit(
         sb.append(license).append(newLine())
 
         val packageName = compilationUnit.packageDeclaration.get().toString()
-            .replace(".reference", ".internal")
+            .replace(".reference", ".jvm")
             .trim()
         sb.append(packageName)
             .append(newLine())
@@ -30,7 +30,7 @@ class JvmCompilationUnit(
         val imports = compilationUnit.imports.map {
             it.toString()
                 .trim()
-                .replace(".reference.", ".internal.")
+                .replace(".reference.", ".jvm.")
         }.joinToString(newLine())
         sb.append(imports)
             .append(newLine())

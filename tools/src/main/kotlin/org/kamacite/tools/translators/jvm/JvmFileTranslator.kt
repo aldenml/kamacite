@@ -28,7 +28,7 @@ class JvmFileTranslator(
         val path = file.compilationUnit.storage.get().path.toString()
         val newPath = path
             .replaceFirst("/reference/", "/translations/jvm/")
-            .replaceFirst("/reference/", "/internal/")
+            .replaceFirst("/reference/", "/jvm/")
         return Path.of(newPath)
     }
 }

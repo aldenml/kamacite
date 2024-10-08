@@ -5,7 +5,7 @@
  * Copy of the license at https://opensource.org/licenses/MIT
  */
 
-package org.kamacite.internal;
+package org.kamacite.jvm;
 
 
 
