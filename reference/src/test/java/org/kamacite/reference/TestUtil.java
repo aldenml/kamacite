@@ -9,13 +9,13 @@ package org.kamacite.reference;
 
 public class TestUtil {
 
-    public static void string2decimal(char[] out, int outLen, String s) {
+    public static void string2chars(char[] out, int outLen, String s) {
         for (int i = 0; i < outLen; i++) {
             out[i] = s.charAt(i);
         }
     }
 
-    public static void assert_string_equals(char[] a, char[] b, int len) {
+    public static void assert_char_array_equals(char[] a, char[] b, int len) {
         for (int i = 0; i < len; i++) {
             assert a[i] == b[i];
         }

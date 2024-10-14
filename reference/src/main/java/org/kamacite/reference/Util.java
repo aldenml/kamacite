@@ -12,7 +12,7 @@ public class Util {
     /**
      * out length: <code>len >= (strLen + 1) / 2 + 1</code>.
      */
-    public static void decimal2bin(byte[] out, int outLen, char[] str, int strLen) {
+    public static void kmc_decimal2bin(byte[] out, int outLen, char[] str, int strLen) {
         for (int j = 0; j < strLen; j++) {
             char c = str[j];
             int digit = c - '0';
@@ -36,7 +36,7 @@ public class Util {
     /**
      * out length: <code>len >= nLen * 3 + 1</code>.
      */
-    public static void bin2decimal(char[] out, int outLen, byte[] n, int nLen) {
+    public static void kmc_bin2decimal(char[] out, int outLen, byte[] n, int nLen) {
         for (int i = 0; i < outLen; i++) {
             out[i] = '0';
         }
@@ -60,7 +60,7 @@ public class Util {
      * @param b the second byte array representing an unsigned number
      * @return -1 if a < b, 0 if a == b, 1 if a > b
      */
-    public static int compare(byte[] a, byte[] b, int len) {
+    public static int kmc_compare(byte[] a, byte[] b, int len) {
         int gt = 0;
         int eq = 1;
         int x1 = 0;
@@ -76,7 +76,7 @@ public class Util {
         return (gt + gt + eq) - 1;
     }
 
-    public static void add(byte[] a, byte[] b, int len) {
+    public static void kmc_add(byte[] a, byte[] b, int len) {
         int c = 0;
 
         for (int i = 0; i < len; i++) {

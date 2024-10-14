@@ -19,13 +19,13 @@ public class UtilTest {
         int nLen = 64;
         char[] strIn = new char[9];
         int strInLen = 9;
-        string2decimal(strIn, strInLen, "123456789");
-        decimal2bin(n, nLen, strIn, strInLen);
+        string2chars(strIn, strInLen, "123456789");
+        kmc_decimal2bin(n, nLen, strIn, strInLen);
         char[] strOut = new char[9];
         int strOutLen = 9;
-        bin2decimal(strOut, strOutLen, n, nLen);
+        kmc_bin2decimal(strOut, strOutLen, n, nLen);
         assert_int_equals(strInLen, strOutLen);
-        assert_string_equals(strIn, strOut, strInLen);
+        assert_char_array_equals(strIn, strOut, strInLen);
     }
     
     @Test
@@ -36,16 +36,16 @@ public class UtilTest {
         int n2Len = 64;
         char[] strIn = new char[9];
         int strInLen = 9;
-        string2decimal(strIn, strInLen, "123456789");
-        decimal2bin(n1, n1Len, strIn, strInLen);
+        string2chars(strIn, strInLen, "123456789");
+        kmc_decimal2bin(n1, n1Len, strIn, strInLen);
         strIn[0] = '2';
-        decimal2bin(n2, n2Len, strIn, strInLen);
+        kmc_decimal2bin(n2, n2Len, strIn, strInLen);
         assert_int_equals(n1Len, n2Len);
-        int r1 = compare(n1, n2, n1Len);
+        int r1 = kmc_compare(n1, n2, n1Len);
         assert_int_equals(r1, -1);
-        int r2 = compare(n1, n1, n1Len);
+        int r2 = kmc_compare(n1, n1, n1Len);
         assert_int_equals(r2, 0);
-        int r3 = compare(n2, n1, n1Len);
+        int r3 = kmc_compare(n2, n1, n1Len);
         assert_int_equals(r3, 1);
     }
     
@@ -55,17 +55,17 @@ public class UtilTest {
         int nLen = 64;
         char[] strIn = new char[9];
         int strInLen = 9;
-        string2decimal(strIn, strInLen, "123456789");
-        decimal2bin(n, nLen, strIn, strInLen);
-        add(n, n, nLen);
+        string2chars(strIn, strInLen, "123456789");
+        kmc_decimal2bin(n, nLen, strIn, strInLen);
+        kmc_add(n, n, nLen);
         char[] strOut = new char[9];
         int strOutLen = 9;
-        bin2decimal(strOut, strOutLen, n, nLen);
+        kmc_bin2decimal(strOut, strOutLen, n, nLen);
         char[] strExpected = new char[9];
         int strExpectedLen = 9;
-        string2decimal(strExpected, strExpectedLen, "246913578");
+        string2chars(strExpected, strExpectedLen, "246913578");
         assert_int_equals(strExpectedLen, strOutLen);
-        assert_string_equals(strExpected, strOut, strInLen);
+        assert_char_array_equals(strExpected, strOut, strInLen);
     }
     
 }

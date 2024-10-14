@@ -11,7 +11,7 @@ package org.kamacite.jvm;
 
 public class Util {
 
-    public static void decimal2bin(byte[] out, int outLen, char[] str, int strLen) {
+    public static void kmc_decimal2bin(byte[] out, int outLen, char[] str, int strLen) {
         for (int j = 0; j < strLen; j++) {
             char c = str[j];
             int digit = c - '0';
@@ -33,7 +33,7 @@ public class Util {
     
     }
     
-    public static void bin2decimal(char[] out, int outLen, byte[] n, int nLen) {
+    public static void kmc_bin2decimal(char[] out, int outLen, byte[] n, int nLen) {
         for (int i = 0; i < outLen; i++) {
             out[i] = '0';
         }
@@ -51,7 +51,7 @@ public class Util {
     
     }
     
-    public static int compare(byte[] a, byte[] b, int len) {
+    public static int kmc_compare(byte[] a, byte[] b, int len) {
         int gt = 0;
         int eq = 1;
         int x1 = 0;
@@ -66,7 +66,7 @@ public class Util {
         return (gt + gt + eq) - 1;
     }
     
-    public static void add(byte[] a, byte[] b, int len) {
+    public static void kmc_add(byte[] a, byte[] b, int len) {
         int c = 0;
         for (int i = 0; i < len; i++) {
             c = c + (a[i] & 0xFF) + (b[i] & 0xFF);
