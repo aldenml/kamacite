@@ -14,6 +14,7 @@ interface CodeTranslator {
 
     enum class Target(val prefix: String) {
         JVM("Jvm"),
+        C("C"),
     }
 
     val target: Target
@@ -56,5 +57,23 @@ interface CodeTranslator {
         val indentWith = 4
 
         return s.prependIndent(" ".repeat(indentWith))
+    }
+
+    companion object {
+
+        fun camelToSnakeCase(s: String): String {
+            val result = StringBuilder()
+            for ((index, c) in s.withIndex()) {
+                if (c.isUpperCase()) {
+                    if (index != 0) {
+                        result.append('_')
+                    }
+                    result.append(c.lowercaseChar())
+                } else {
+                    result.append(c)
+                }
+            }
+            return result.toString()
+        }
     }
 }
